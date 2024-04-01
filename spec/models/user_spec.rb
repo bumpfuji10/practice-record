@@ -1,0 +1,95 @@
+require 'rails_helper'
+
+RSpec.describe User, type: :model do
+
+  describe "validations" do
+    let!(:user) { FactoryBot.build(:user, name: "Yo Kamada", email: "test@example.com") }
+
+    describe "name" do
+
+      context "名前がある場合" do
+
+        it "userが有効であること" do
+          expect(user).to be_valid
+        end
+      end
+
+      context "名前が無い場合" do
+        before do
+          user.update(name: nil)
+        end
+
+        it "userが無効であること" do
+          expect(user).to be_invalid
+        end
+      end
+
+      context "名前が50文字以内の場合" do
+        before do
+          user.update(name: "a" * 50)
+        end
+
+        it "userが有効であること" do
+          expect(user).to be_valid
+        end
+      end
+
+      context "名前が51文字以上の場合" do
+        before do
+          user.update(name: "a" * 51)
+        end
+
+        it "userが無効であること" do
+          expect(user).to be_invalid
+        end
+      end
+    end
+
+    describe "email" do
+
+      context "メールアドレスが正規表現に則っている場合" do
+        it "userが有効であること" do
+          expect(user).to be_valid
+        end
+      end
+
+      context "メールアドレスが正規表現に則っていない場合" do
+
+        before do
+          user.update(email: "test@example")
+        end
+
+        it "userが無効であること" do
+          expect(user).to be_invalid
+        end
+      end
+
+      context "メールアドレスがある場合" do
+        it "userが有効であること" do
+          expect(user).to be_valid
+        end
+      end
+
+      context "メールアドレスが無い場合" do
+        before do
+          user.update(email: nil)
+        end
+
+        it "userが無効であること" do
+          expect(user).to be_invalid
+        end
+      end
+
+      context "メールアドレスが重複している場合" do
+        let!(:other_user) { FactoryBot.create(:user, name: "Taro Tanaka", email: "test@example.com") }
+        let!(:invalid_user) { FactoryBot.build(:user, name: "Jiro Yamada", email: "test@example.com") }
+
+        it "other_userが無効である場合" do
+          expect(invalid_user).to be_invalid
+        end
+      end
+
+    end
+
+  end
+end
