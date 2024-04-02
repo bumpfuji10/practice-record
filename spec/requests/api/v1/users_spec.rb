@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Users", type: :request do
   describe "GET /users" do
-    let!(:user) { FactoryBot.create(:user, name: "Yo Kamada", email: "test@example.com") }
+    let!(:user) { FactoryBot.create(:user, name: "Yo Kamada", email: "test@example.com", password: "password") }
 
     before do
       get "/api/v1/users"
