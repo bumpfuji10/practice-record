@@ -17,5 +17,50 @@ module UserAuth
         @token = JWT.encode(@payload, secret_key, algorithm, header_fields)
       end
     end
+
+    private
+
+    def secret_key
+      UserAuth.token_secret_signature_key.call
+    end
+
+    def decode_key
+      UserAuth.token_public_key || secret_key
+    end
+
+    def algorithm
+      UserAuth.token_signature_algorithm
+    end
+
+    def verify_audience?
+      UserAuth.token_audience.present?
+    end
+
+    def token_audience
+      verify_audience? && UserAuth.token_audience.call
+    end
+
+    def token_lifetime
+      @lifetime.from_now.to_i
+    end
+
+    def decode_options
+      {
+        aud: token_audience,
+        verify_aud: verify_audience?,
+        algorithm: algorithm
+      }
+    end
+
+    def claims
+      _claims = {}
+      _claims[:exp] = token_lifetime
+      _claims[:aud] = token_audience if verify_audience?
+      _claims
+    end
+
+    def header_fields
+      { typ: "JWT" }
+    end
   end
 end

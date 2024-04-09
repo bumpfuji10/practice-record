@@ -5,7 +5,6 @@ module UserAuth
 
   mattr_accessor :token_audience
   self.token_audience = -> {
-    # あとで作成する
     ENV["APP_URL"]
   }
 
