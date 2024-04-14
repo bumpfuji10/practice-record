@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_secure_password
 
   def self.find_activated(email)
-    find_by(email: email, activated: true)
+    find_by!(email: email, activated: true)
   end
 
   def email_activate?
