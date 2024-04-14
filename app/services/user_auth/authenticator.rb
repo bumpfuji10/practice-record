@@ -1,12 +1,12 @@
 module UserAuth
-  module Aunthenticator
+  module Authenticator
 
     def authenticate_user
       current_user.presence || unauthorized_user
     end
 
     def delete_cookie
-      return if cookie[token_access_key].blank?
+      return if cookies[token_access_key].blank?
       cookies.delete(token_access_key)
     end
 
@@ -29,7 +29,7 @@ module UserAuth
 
     def fetch_entity_from_token
       AuthToken.new(token: token).entity_for_user
-    rescue(ActiveRecord::RecordNotFound, JWT::DecodeError, JWT::EncodeError)
+    rescue ActiveRecord::RecordNotFound, JWT::DecodeError, JWT::EncodeError
       nil
     end
 
