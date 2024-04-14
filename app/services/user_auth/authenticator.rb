@@ -14,7 +14,7 @@ module UserAuth
 
     # リクエストヘッダーからトークンを取得
     def token_from_request_headers
-      request.headers["Authorication"]&.split&.last
+      request.headers["Authorization"]&.split&.last
     end
 
     # クッキーのオブジェクトキー(config/initializers/user_auth.rb)
