@@ -1,4 +1,4 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
-  include UserAuth::Aunthenticator
+  include UserAuth::Authenticator
 end
