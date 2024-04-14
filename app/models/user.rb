@@ -13,7 +13,10 @@ class User < ApplicationRecord
 
   def email_activate?
     users = User.where.not(id: id)
+    pp users
+    pp id
     users.find_activated(email).present?
+    pp users.find_activated(email)
   end
 
   def my_json
