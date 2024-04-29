@@ -131,6 +131,34 @@ RSpec.describe User, type: :model do
         end
       end
     end
+  end
 
+  describe "methods" do
+
+    describe ".find_activated" do
+      let!(:user) { FactoryBot.create(:user, name: "Yo Kamada", email: "test@example.com", password: "password") }
+      let(:email) { user.email }
+
+      context "ユーザーがactivateされている場合" do
+        before do
+          user.update(activated: true)
+        end
+        it "activateされたユーザーを返すこと" do
+          expect(User.find_activated(email)).to eq user
+        end
+      end
+
+      context "ユーザーがactivateされていない場合" do
+        it "AcitveRecord::RecordNotFoundとなること" do
+          expect {
+            User.find_activated(email)
+          }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+
+    # TODO: email_activate?のspec
+    # describe "email_activate?" do
+    # end
   end
 end

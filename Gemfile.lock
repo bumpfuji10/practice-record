@@ -66,6 +66,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    base64 (0.2.0)
     bcrypt (3.1.20)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
@@ -79,6 +80,10 @@ GEM
     diff-lcs (1.5.1)
     dockerfile-rails (1.6.7)
       rails (>= 3.0.0)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.12.0)
     factory_bot (6.4.5)
       activesupport (>= 5.0.0)
@@ -93,6 +98,8 @@ GEM
     irb (1.12.0)
       rdoc
       reline (>= 0.4.2)
+    jwt (2.8.1)
+      base64
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -203,7 +210,9 @@ DEPENDENCIES
   bootsnap
   debug
   dockerfile-rails (>= 1.6)
+  dotenv-rails
   factory_bot_rails
+  jwt (~> 2.2)
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors
